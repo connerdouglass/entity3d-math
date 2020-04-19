@@ -1,8 +1,6 @@
 #pragma once
 
-#include <type_traits>
 #include <cinttypes>
-#include <iostream>
 #include <cmath>
 
 template <uint8_t R, uint8_t C>
