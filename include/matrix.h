@@ -3,9 +3,19 @@
 #include <type_traits>
 #include <cinttypes>
 #include <iostream>
+#include <cmath>
 
 template <uint8_t R, uint8_t C>
 struct Mat {
+
+    /**
+     * Constructs an identity matrix
+     */
+    static Mat<R, C> identity();
+
+    static Mat<R, C> rotate_x(float rot_x);
+    static Mat<R, C> rotate_y(float rot_y);
+    static Mat<R, C> rotate_z(float rot_z);
 
     /**
      * The raw data in the matrix
@@ -13,9 +23,6 @@ struct Mat {
     float data[R * C];
 
     Mat<R, C>();
-
-    // template<uint8_t S>
-    static Mat<R, C> identity();
 
     float get(uint8_t r, uint8_t c) const;
     void get_row(uint8_t row, float* values) const;
@@ -28,10 +35,15 @@ struct Mat {
 
     Mat<R, C> multiply(float other) const;
     Mat<C, R> transpose() const;
+    Mat<R, C> add(Mat<R, C>& other) const;
+
+    template<uint8_t OtherC>
+    Mat<R, OtherC> operator*(Mat<C, OtherC>& other) const;
+
+    Mat<R, C> operator*(float other) const;
+    Mat<R, C> operator+(Mat<R, C>& other) const;
 
 };
-
-// typedef Mat<4, 4> Mat4;
 
 template<uint8_t R, uint8_t C>
 Mat<R, C>::Mat() {
@@ -41,6 +53,69 @@ Mat<R, C>::Mat() {
 
     // Loop through the data and set to zero
     for (uint8_t i = 0; i < size; i++) this->data[i] = 0;
+
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::rotate_x(float rot_x) {
+
+    // Create the identity matrix
+    Mat<R, C> result = Mat<R, C>::identity();
+
+    // Calculate the trig values
+    float sin_theta = sin(rot_x);
+    float cos_theta = cos(rot_x);
+
+    // Fill in the rotation values
+    result.set(1, 1, cos_theta);
+    result.set(1, 2, -sin_theta);
+    result.set(2, 1, sin_theta);
+    result.set(2, 2, cos_theta);
+
+    // Return the result matrix
+    return result;
+
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::rotate_y(float rot_y) {
+
+    // Create the identity matrix
+    Mat<R, C> result = Mat<R, C>::identity();
+
+    // Calculate the trig values
+    float sin_theta = sin(rot_y);
+    float cos_theta = cos(rot_y);
+
+    // Fill in the rotation values
+    result.set(0, 0, cos_theta);
+    result.set(0, 2, sin_theta);
+    result.set(2, 0, -sin_theta);
+    result.set(2, 2, cos_theta);
+
+    // Return the result matrix
+    return result;
+
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::rotate_z(float rot_z) {
+
+    // Create the identity matrix
+    Mat<R, C> result = Mat<R, C>::identity();
+
+    // Calculate the trig values
+    float sin_theta = sin(rot_z);
+    float cos_theta = cos(rot_z);
+
+    // Fill in the rotation values
+    result.set(0, 0, cos_theta);
+    result.set(0, 1, -sin_theta);
+    result.set(1, 0, sin_theta);
+    result.set(1, 1, cos_theta);
+
+    // Return the result matrix
+    return result;
 
 }
 
@@ -134,7 +209,7 @@ Mat<R, C> Mat<R, C>::multiply(float other) const {
     Mat<R, C> result;
 
     // Calculate the total data points
-    constexpr int size = R * C;
+    constexpr uint8_t size = R * C;
 
     // Loop through the data
     for (uint8_t i = 0; i < size; i++) {
@@ -171,6 +246,28 @@ Mat<C, R> Mat<R, C>::transpose() const {
 }
 
 template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::add(Mat<R, C>& other) const {
+    
+    // Create the result matrix
+    Mat<R, C> result;
+
+    // Calculate the total data points
+    constexpr uint8_t size = R * C;
+
+    // Loop through the data
+    for (uint8_t i = 0; i < size; i++) {
+
+        // Move and multiply the data
+        result.data[i] = this->data[i] + other.data[i];
+
+    }
+
+    // Return the results
+    return result;
+
+}
+
+template<uint8_t R, uint8_t C>
 std::ostream& operator<<(std::ostream& out, Mat<R, C> const& obj) {
 
     // Loop through the rows
@@ -187,4 +284,20 @@ std::ostream& operator<<(std::ostream& out, Mat<R, C> const& obj) {
     // Return the strea
     return out;
 
+}
+
+template<uint8_t R, uint8_t C>
+template<uint8_t OtherC>
+Mat<R, OtherC> Mat<R, C>::operator*(Mat<C, OtherC>& other) const {
+    return this->multiply(other);
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::operator*(float other) const {
+    return this->multiply(other);
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::operator+(Mat<R, C>& other) const {
+    return this->add(other);
 }
