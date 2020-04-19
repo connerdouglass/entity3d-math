@@ -63,19 +63,38 @@ Vec<S> Vec<S>::cross(Vec<S>& other) const {
     // Create the result vector
     Vec<S> result;
 
+    // Get all of the values from this matrix
     float a_x = this->get(0);
     float a_y = this->get(1);
     float a_z = this->get(2);
 
+    // Get all of the values from the other matrix
     float b_x = other.get(0);
     float b_y = other.get(1);
     float b_z = other.get(2);
 
+    // Calculate each component of the result
     result.set(0, a_y * b_z - a_z * b_y);
     result.set(1, a_z * b_x - a_x * b_z);
     result.set(2, a_x * b_y - a_y * b_x);
 
     // Return the result
     return result;
+
+}
+
+template<uint8_t S>
+std::ostream& operator<<(std::ostream& out, Vec<S> const& obj) {
+
+    // Output all the elements
+    out << "<";
+    for (uint8_t i = 0; i < S; i++) {
+        if (i > 0) out << ", ";
+        out << obj.get(i);
+    }
+    out << ">";
+
+    // Return the stream
+    return out;
 
 }
