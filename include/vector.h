@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cinttypes>
+#include <cmath>
 #include "matrix.h"
 
 template<uint8_t S>
@@ -80,6 +81,23 @@ Vec<S> Vec<S>::cross(Vec<S>& other) const {
 
     // Return the result
     return result;
+
+}
+
+template<uint8_t S>
+float Vec<S>::magnitude() const {
+
+    // Create the sum
+    float sum = 0;
+
+    // Loop through the components
+    for (int i = 0; i < S; i++) {
+        float val = this->get(i);
+        sum += val * val;
+    }
+
+    // Return the square-root
+    return sqrtf(sum);
 
 }
 

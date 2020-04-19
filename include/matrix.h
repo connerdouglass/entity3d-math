@@ -133,8 +133,8 @@ Mat<R, C> Mat<R, C>::rotate_x(float rot_x) {
     Mat<R, C> result = Mat<R, C>::identity();
 
     // Calculate the trig values
-    float sin_theta = sin(rot_x);
-    float cos_theta = cos(rot_x);
+    float sin_theta = sinf(rot_x);
+    float cos_theta = cosf(rot_x);
 
     // Fill in the rotation values
     result.set(1, 1, cos_theta);
@@ -154,8 +154,8 @@ Mat<R, C> Mat<R, C>::rotate_y(float rot_y) {
     Mat<R, C> result = Mat<R, C>::identity();
 
     // Calculate the trig values
-    float sin_theta = sin(rot_y);
-    float cos_theta = cos(rot_y);
+    float sin_theta = sinf(rot_y);
+    float cos_theta = cosf(rot_y);
 
     // Fill in the rotation values
     result.set(0, 0, cos_theta);
@@ -175,8 +175,8 @@ Mat<R, C> Mat<R, C>::rotate_z(float rot_z) {
     Mat<R, C> result = Mat<R, C>::identity();
 
     // Calculate the trig values
-    float sin_theta = sin(rot_z);
-    float cos_theta = cos(rot_z);
+    float sin_theta = sinf(rot_z);
+    float cos_theta = cosf(rot_z);
 
     // Fill in the rotation values
     result.set(0, 0, cos_theta);

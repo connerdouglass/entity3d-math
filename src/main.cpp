@@ -43,6 +43,9 @@ int main() {
     Vec<3> cross = v1.cross(v2);
     std::cout << cross << std::endl << std::endl;
 
-    std::cout << (cross * 5) << std::endl;
+    // std::cout << (cross * 5) << std::endl;
+
+    Vec<3> x_axis = Vec<3>::axis_x();
+    std::cout << x_axis << std::endl;
 
 }
