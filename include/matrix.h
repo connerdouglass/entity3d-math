@@ -1,12 +1,21 @@
 #pragma once
 
+#include <type_traits>
 #include <cinttypes>
 #include <iostream>
 
 template <uint8_t R, uint8_t C>
 struct Mat {
 
+    /**
+     * The raw data in the matrix
+     */
     float data[R * C];
+
+    Mat<R, C>();
+
+    // template<uint8_t S>
+    static Mat<R, C> identity();
 
     float get(uint8_t r, uint8_t c) const;
     void get_row(uint8_t row, float* values) const;
@@ -16,12 +25,39 @@ struct Mat {
 
     template<uint8_t OtherC>
     Mat<R, OtherC> multiply(Mat<C, OtherC>& other) const;
+
     Mat<R, C> multiply(float other) const;
     Mat<C, R> transpose() const;
 
 };
 
 // typedef Mat<4, 4> Mat4;
+
+template<uint8_t R, uint8_t C>
+Mat<R, C>::Mat() {
+
+    // Calculate the total data points
+    constexpr int size = R * C;
+
+    // Loop through the data and set to zero
+    for (uint8_t i = 0; i < size; i++) this->data[i] = 0;
+
+}
+
+template<uint8_t R, uint8_t C>
+Mat<R, C> Mat<R, C>::identity() {
+    static_assert(C == R, "Matrix identity dimension rows must equal columns");
+
+    // Create the matrix
+    Mat<R, C> result;
+
+    // Loop through the size
+    for (uint8_t i = 0; i < R; i++) result.set(i, i, 1.0);
+
+    // Return the result
+    return result;
+
+}
 
 template<uint8_t R, uint8_t C>
 float Mat<R, C>::get(uint8_t r, uint8_t c) const {
