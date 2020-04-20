@@ -115,7 +115,7 @@ Vec3 vec ((float[]){ 1, 2, 0 });
 Mat4 scale = utils::mat::mat4_create_scale(2, 2, 2);
 
 // Perform the multiplication, but resize first
-Vec4 result = utils::vec::resize<4>(vec) * scale;
+Vec4 result = scale * utils::vec::resize<4>(vec);
 
 // If you wish, resize back to 3-dimensions
 Vec3 result_3d = utils::vec::resize<3>(result);
