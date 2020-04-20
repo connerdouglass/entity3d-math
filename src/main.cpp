@@ -12,6 +12,7 @@ int main() {
 
     // Create some composite based on the unit vectors
     Vec3 comp = x * 2.0f + y * 3.0f + z * 4.0f;
+    // Vec3 comp ((float[]){ 2.0f, 3.0f, 4.0f });
     std::cout << comp << std::endl;
 
     Mat4 rotation = utils::mat::mat4_create_rotation_y(M_PI);
