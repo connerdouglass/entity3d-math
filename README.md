@@ -6,6 +6,15 @@ In two words: safety and accuracy. This library makes extensive use of C++ templ
 
 As an example, if one attempts to multiply matrices together with incompatible dimensions, the code will not compile. This prevents whole classes of runtime errors, and removes the need for runtime dimension checks / assertions.
 
+### Goals
+
+The following are some of the goals of this library:
+ - Provide a very general set of linear algebra types (vectors, matrices, quaternions, points, etc.) and utility functions to manipulate them.
+ - Make no assumptions about the vector space of the user. Everything is templated with `uint8_t` and should theoretically support [1, 256) dimensions, even though that is admittedly outrageous.
+ - A single interface should exist across any number of dimensions. Vectors in 2 or 100 dimensions are both of type `Vec<S>`.
+ - Where possible, a single implementation should exist across any number of dimensions, but only if the runtime cost is zero or near-zero. If this isn't possible, metaprogramming and macros may be used to optimize at compile-time.
+ - Make compile-time guarantees of the legality of all operations, such as multiplying matrices (must be compatible), or creating identity matrices (must be square).
+
 ### Sample code
 
 The code below shows how to create and print vectors:
@@ -52,7 +61,7 @@ std::cout << "Result: " << result << std::endl;   // --> Result: <-1, 2, 3, 0>
 
 In linear algebra, matrices can only be multiplied if they are dimensionally compatible. The number of columns on the left matrix must match the number of rows on the right matrix.
 
-Even though `Mat<R, C>` and `Vec<S>` are templated and allow arbitrary dimensions to be used, it's impossible to perform multiplications and divisions on matrices and vectors which are incompatible. This error is a compiler error, not a runtime error. If you're using an IDE, it will display the error while you're writing your code.
+Even though `Mat<R, C>` and `Vec<S>` are templated and allow arbitrary dimensions to be used, it's impossible to perform multiplications and divisions on matrices and vectors which are incompatible. This error is a compiler error, not a runtime error.
 
 As an example, the following code will not compile:
 
@@ -76,14 +85,19 @@ Mat<4, 5> b = ...
 Mat<3, 5> = a * b;
 ```
 
-### Goals
+Likewise, there is a special type of matrix called an "identity matrix." When a matrix is multiplied by an identity matrix, the result is a matrix exactly equal to the original. Despite their seeming uselessness, identity matrices are indeed useful as the starting point when composing a sequence of transformations.
 
-The following are some of the goals of this library:
- - Provide a very general set of linear algebra types (vectors, matrices, quaternions, points, etc.) and utility functions to manipulate them.
- - Make no assumptions about the vector space of the user. Everything is templated with `uint8_t` and should theoretically support [1, 256) dimensions, even though that is admittedly outrageous.
- - A single interface should exist across any number of dimensions. Vectors in 2 or 100 dimensions are both of type `Vec<S>`.
- - Where possible, a single implementation should exist across any number of dimensions, but only if the runtime cost is zero or near-zero. If this isn't possible, metaprogramming and macros may be used to optimize at compile-time.
- - Make compile-time guarantees of the legality of all operations, such as multiplying matrices (must be compatible), or creating identity matrices (must be square).
+Importantly, identity matrices must be square – the number of rows must match the number of columns. This is necessary so that the product of multiplication has the same dimensions as the original matrix.
+
+This rule is enforced at compile-time via a static assertion. Here's an example of this:
+
+```cpp
+// This will not compile:
+auto bad_identity = Mat<3, 6>::identity();
+
+// But, this WILL compile:
+auto identity = Mat<4, 4>::identity();
+```
 
 ### Contribute
 Contributions are welcome!
