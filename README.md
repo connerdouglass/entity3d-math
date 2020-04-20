@@ -21,18 +21,69 @@ Vec3 j = utils::vec::y_axis<4>();
 Vec3 k = utils::vec::z_axis<4>();
 
 // Create some composite vector with operators
-Vec3 composite = x * 2.0f + y * 3.0f + z * 4.0f;
+Vec3 composite = i * 2.0f + j * 3.0f + k * 4.0f;
 
 // Or, just define it manually...
-Vec3 composite ((float[]){ 2.0f, 3.0f, 4.0f });
+Vec3 composite ((float[]){ 2, 3, 4 });
 
 // Then, we can print it out
-std::cout << composite << std::endl;   // --> <2, 3, 4>
+std::cout << composite << std::endl;   // --> < 2, 3, 4 >
 ```
 
-`Vec3` is a typedef shortcut which indicates a vector with three components. You can create vectors with arbitrary components with the template syntax `Vec<#>`.
+`Vec3` is a typedef shortcut which indicates a vector with three components. You can create vectors with arbitrary components with the template syntax `Vec<#>`. These are built-in: `Vec2`, `Vec3`, `Vec4`, and `Mat4` (4x4 matrix).
 
 Even further, every vector is actually just a matrix with a single row, and a configurable number of columns. The type definition for vector, `Vec<uint8_t S>`, is an alias for `Mat<1, S>`. This allows all of the matrix math functions in `e3d::utils::mat` to apply both to matrices and vectors.
+
+This is useful because it enables the following transformations to be very simple, as simple as they would be in GLSL, for instance:
+
+```cpp
+// Define our starting point
+Vec4 original ((float[]){ 1, 2, 3 });
+
+// Rotate the point about the origin π radians (180 degrees) CCW
+Mat4 rotation = utils::mat::mat4_create_rotation_y(M_PI);
+Vec4 result = original * rotation;
+
+// Print out the result
+std::cout << "Result: " << result << std::endl;   // --> Result: <-1, 2, 3, 0>
+```
+
+### Compile-time Safety
+
+In linear algebra, it's a rule that matrices can only be multiplied if they are dimensionally compatible. The number of columns on the left matrix must match the number of rows on the right matrix.
+
+Even though `Mat<R, C>` and `Vec<S>` are templated and allow arbitrary dimensions to be used, it's impossible to perform multiplications and divisions on matrices and vectors which are incompatible. This error is a compiler error, not a runtime error. If you're using an IDE, it will display the error while you're writing your code.
+
+As an example, the following code will not compile:
+
+```cpp
+// Create a 3x4 and a 5x6 matrix
+Mat<3, 4> a = ...
+Mat<5, 6> b = ...
+
+// This line will cause a compiler error!
+auto result = a * b;
+```
+
+The following code, however, compiles and runs without issue:
+
+```cpp
+// Create a 3x4 and a 4x5 matrix
+Mat<3, 4> a = ...
+Mat<4, 5> b = ...
+
+// Multiply them together, resulting in a 3x5 result
+Mat<3, 5> = a * b;
+```
+
+### Goals
+
+The following are some of the goals of this library:
+ - Provide a very general set of linear algebra types (vectors, matrices, quaternions, points, etc.) and utility functions to manipulate them.
+ - Make no assumptions about the vector space of the user. Everything is templated with `uint8_t` and should theoretically support [1, 256) dimensions, even though that is admittedly outrageous.
+ - A single interface should exist across any number of dimensions. Vectors in 2 or 100 dimensions are both of type `Vec<S>`.
+ - Where possible, a single implementation should exist across any number of dimensions, but only if the runtime cost is zero or near-zero. If this isn't possible, metaprogramming and macros may be used to optimize at compile-time.
+ - Make compile-time guarantees of the legality of all operations, such as multiplying matrices (must be compatible), or creating identity matrices (must be square).
 
 ### Contribute
 Contributions are welcome!
