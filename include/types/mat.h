@@ -355,17 +355,34 @@ namespace e3d {
     template<uint8_t R, uint8_t C>
     ::std::ostream& operator<<(::std::ostream& out, Mat<R, C> const& obj) {
 
-        // Loop through the rows
-        for (uint8_t r = 0; r < R; r++) {
-            if (r != 0) out << std::endl;
-            out << (R == 1 ? "<" : "|");
-            for (uint8_t c = 0; c < C; c++) {
-                if (c != 0) out << (R == 1 ? ", " : "  ");
-                float value = obj.get(r, c);
+        // If it's a vector
+        if (C == 1) {
+
+            // Print it as a single line
+            out << "<";
+            for (uint8_t i = 0; i < R; i++) {
+                if (i > 0) out << ", ";
+                float value = obj.get(i);
                 if (value >= 0) out << " ";
                 out << std::fixed << std::setprecision(3) << value;
             }
-            out << (R == 1 ? ">" : " |");
+            out << ">";
+
+        } else {
+
+            // Loop through the rows
+            for (uint8_t r = 0; r < R; r++) {
+                if (r > 0) out << std::endl;
+                out << "|";
+                for (uint8_t c = 0; c < C; c++) {
+                    if (c > 0) out << "  ";
+                    float value = obj.get(r, c);
+                    if (value >= 0) out << " ";
+                    out << std::fixed << std::setprecision(3) << value;
+                }
+                out << " |";
+            }
+
         }
 
         // Return the stream

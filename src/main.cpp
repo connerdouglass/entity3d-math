@@ -11,9 +11,9 @@ int main() {
     Vec3 z = utils::vec::z_axis<3>();
 
     // Define our starting point
-    Vec4 original ((float[]){ 1, 2, 3 });
-    Mat4 r = utils::mat::mat4_create_rotation_y(M_PI);
-    Vec4 result = original * r;
+    e3d::Vec4 original ((float[]){ 1, 2, 3 });
+    e3d::Mat4 r = utils::mat::mat4_create_rotation_y(M_PI);
+    e3d::Vec4 result = original * r;
     std::cout << "Rotated: " << result << std::endl;
 
     // Create some composite based on the unit vectors
@@ -24,12 +24,12 @@ int main() {
     Mat4 rotation = utils::mat::mat4_create_rotation_y(M_PI);
     // Vec4 rot = utils::vec::resize<4>(x).multiply(rotation);
 
-    auto rot = utils::vec::resize<4>(x).multiply(rotation);
+    auto rot = rotation * utils::vec::resize<4>(x);
     std::cout << rot << std::endl;
 
     utils::mat::mat4_create_scale(2, 2, 2);
 
-    Mat<4, 3>::identity();
+    // Mat<4, 3>::identity();
 
     std::cout << "Cross:" << std::endl;
     std::cout << utils::vec::cross(
