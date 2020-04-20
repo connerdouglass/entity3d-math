@@ -41,21 +41,23 @@ std::cout << composite << std::endl;   // --> < 2, 3, 4 >
 
 `Vec3` is a typedef shortcut which indicates a vector with three components. You can create vectors with arbitrary components with the template syntax `Vec<#>`. These are built-in: `Vec2`, `Vec3`, `Vec4`, and `Mat4` (4x4 matrix).
 
-Even further, every vector is actually just a matrix with a single row, and a configurable number of columns. The type definition for vector, `Vec<uint8_t S>`, is an alias for `Mat<1, S>`. This allows all of the matrix math functions in `e3d::utils::mat` to apply both to matrices and vectors.
+Even further, every vector is actually just a matrix with a single column, and a configurable `S` rows. The type definition for vector, `Vec<uint8_t S>`, is an alias for `Mat<S, 1>`. This allows all of the matrix math functions in `e3d::utils::mat` to apply both to matrices and vectors.
 
 This is useful because it enables the following transformations to be very simple, as simple as they would be in GLSL, for instance:
 
 ```cpp
 // Define our starting point
-Vec4 original ((float[]){ 1, 2, 3 });
+Vec4 original ((float[]){ 1, 2, 3, 0 });
 
 // Rotate the point about the origin π radians (180 degrees) CCW
 Mat4 rotation = utils::mat::mat4_create_rotation_y(M_PI);
-Vec4 result = original * rotation;
+Vec4 result = rotation * original;
 
 // Print out the result
-std::cout << "Result: " << result << std::endl;   // --> Result: <-1, 2, 3, 0>
+std::cout << "Result: " << result << std::endl;   // --> Result: <-1, 2, -3, 0>
 ```
+
+Note that order matters. The 4x4 `rotation` matrix needed to come before the 4x1 `original` vector in order for the multiplication to be compatible. You can multiply `(4x4) * (4x1)` but you CANNOT multiply `(4x1) * (4x4)`, due to the rules of linear algebra (more below).
 
 ### Compile-time Safety
 
