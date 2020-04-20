@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <iomanip>
 #include <cinttypes>
 #include <cmath>
 
@@ -357,12 +358,14 @@ namespace e3d {
         // Loop through the rows
         for (uint8_t r = 0; r < R; r++) {
             if (r != 0) out << std::endl;
-            out << "| ";
+            out << (R == 1 ? "<" : "|");
             for (uint8_t c = 0; c < C; c++) {
-                if (c != 0) out << "\t";
-                out << obj.get(r, c);
+                if (c != 0) out << (R == 1 ? ", " : "  ");
+                float value = obj.get(r, c);
+                if (value >= 0) out << " ";
+                out << std::fixed << std::setprecision(3) << value;
             }
-            out << " |";
+            out << (R == 1 ? ">" : " |");
         }
 
         // Return the stream
