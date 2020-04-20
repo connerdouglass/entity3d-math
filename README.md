@@ -50,7 +50,7 @@ std::cout << "Result: " << result << std::endl;   // --> Result: <-1, 2, 3, 0>
 
 ### Compile-time Safety
 
-In linear algebra, it's a rule that matrices can only be multiplied if they are dimensionally compatible. The number of columns on the left matrix must match the number of rows on the right matrix.
+In linear algebra, matrices can only be multiplied if they are dimensionally compatible. The number of columns on the left matrix must match the number of rows on the right matrix.
 
 Even though `Mat<R, C>` and `Vec<S>` are templated and allow arbitrary dimensions to be used, it's impossible to perform multiplications and divisions on matrices and vectors which are incompatible. This error is a compiler error, not a runtime error. If you're using an IDE, it will display the error while you're writing your code.
 
