@@ -99,5 +99,25 @@ auto bad_identity = Mat<3, 6>::identity();
 auto identity = Mat<4, 4>::identity();
 ```
 
+### Resizing Vectors
+
+It's likely that you will encounter a situation in which you need to transform a 3-dimensional `Vec3` by a 4x4-dimensional `Mat4` (or something to that effect). As stated above, this is disallowed at compile-time. To perform this action, your vector needs to be resized to a `Vec4` to make it dimensionally compatible with the matrix.
+
+Here's how you would achieve that:
+
+```cpp
+// We have a vector
+Vec3 vec ((float[]){ 1, 2, 0 });
+
+// We have a transform matrix, let's do scaling (2x on all axes)
+Mat4 scale = utils::mat::mat4_create_scale(2, 2, 2);
+
+// Perform the multiplication, but resize first
+Vec4 result = utils::vec::resize<4>(vec) * scale;
+
+// If you wish, resize back to 3-dimensions
+Vec3 result_3d = utils::vec::resize<3>(result);
+```
+
 ### Contribute
 Contributions are welcome!

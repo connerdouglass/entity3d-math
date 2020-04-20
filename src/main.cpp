@@ -27,6 +27,8 @@ int main() {
     auto rot = utils::vec::resize<4>(x).multiply(rotation);
     std::cout << rot << std::endl;
 
+    utils::mat::mat4_create_scale(2, 2, 2);
+
     Mat<4, 3>::identity();
 
     std::cout << "Cross:" << std::endl;

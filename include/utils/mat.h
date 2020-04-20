@@ -33,6 +33,24 @@ namespace e3d::utils::mat {
     Mat4 mat4_translate(const Mat4& mat, const Vec3& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
 
     /**
+     * Creates a matrix for scaling transformations
+     */
+    Mat4 mat4_create_scale(float x, float y, float z) {
+
+        // Create the matrix
+        Mat4 mat = Mat4::identity();
+
+        // Assign the components
+        mat.set(0, 0, x);
+        mat.set(1, 1, y);
+        mat.set(2, 2, z);
+
+        // Return the matrix
+        return mat;
+
+    }
+
+    /**
      * Performs a scale transformation on a matrix and returns the result
      */
     Mat4 mat4_scale(const Mat4& mat, float x, float y, float z) {
