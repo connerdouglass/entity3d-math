@@ -111,36 +111,52 @@ namespace e3d {
         float w() const { return this->get(0, 3); }
 
         /**
+         * Gets the value at some index
+         */
+        const float operator[](size_t idx) const {
+            return this->data[idx];
+        };
+
+        /**
          * Operator overload for multiplication with another matrix
          */
         template<uint8_t OtherC>
-        Mat<R, OtherC> operator*(const Mat<C, OtherC>& other) const;
+        Mat<R, OtherC> operator*(const Mat<C, OtherC>& other) const {
+            return this->multiply(other);
+        };
 
         /**
          * Operator overload for multiplication with a scalar value
          */
-        Mat<R, C> operator*(float other) const;
+        Mat<R, C> operator*(float other) const {
+            return this->multiply(other);
+        };
 
         /**
          * Operator overload for addition with another matrix
          */
-        Mat<R, C> operator+(const Mat<R, C>& other) const;
+        Mat<R, C> operator+(const Mat<R, C>& other) const {
+            return this->add(other);
+        };
 
         /**
          * Operator overload for division of this matrix with another
          */
         template<uint8_t OtherR>
-        Mat<R, OtherR> operator/(const Mat<OtherR, C>& other) const;
+        Mat<R, OtherR> operator/(const Mat<OtherR, C>& other) const {
+            return this->divide(other);
+        };
 
         /**
          * Operator overload for division with a scalar value
          */
-        Mat<R, C> operator/(const Mat<R, C>& other) const;
+        Mat<R, C> operator/(const Mat<R, C>& other) const {
+            return this->divide(other);
+        }
 
     };
 
     typedef Mat<4, 4> Mat4;
-    typedef Mat<1, 4> Vec4;
 
     template<uint8_t R, uint8_t C>
     Mat<R, C>::Mat(const float values[R * C]) {
@@ -388,34 +404,6 @@ namespace e3d {
         // Return the stream
         return out;
 
-    }
-
-    template<uint8_t R, uint8_t C>
-    template<uint8_t OtherC>
-    Mat<R, OtherC> Mat<R, C>::operator*(const Mat<C, OtherC>& other) const {
-        return this->multiply(other);
-    }
-
-    template<uint8_t R, uint8_t C>
-    Mat<R, C> Mat<R, C>::operator*(float other) const {
-        return this->multiply(other);
-    }
-
-    template<uint8_t R, uint8_t C>
-    Mat<R, C> Mat<R, C>::operator+(const Mat<R, C>& other) const {
-        return this->add(other);
-    }
-
-
-    template<uint8_t R, uint8_t C>
-    template<uint8_t OtherR>
-    Mat<R, OtherR> Mat<R, C>::operator/(const Mat<OtherR, C>& other) const {
-        return this->divide(other);
-    }
-
-    template<uint8_t R, uint8_t C>
-    Mat<R, C> Mat<R, C>::operator/(const Mat<R, C>& other) const {
-        return this->divide(other);
     }
 
 }

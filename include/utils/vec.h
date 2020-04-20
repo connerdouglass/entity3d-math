@@ -104,6 +104,7 @@ namespace e3d::utils::vec {
 
         // Copy the values
         for (uint8_t i = 0; i < Sto; i++) {
+            // if (i < Sfrom) result[i] = vec[i];
             if (i < Sfrom) result.set(i, vec.get(i));
             else result.set(i, 0);
         }
