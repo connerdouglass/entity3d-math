@@ -16,6 +16,13 @@ int main() {
     e3d::Vec4 result = r * original;
     std::cout << result << std::endl;
 
+    // Create a point
+    Point2 p1 ((float[]){ 1, 1 });
+    Point2 p2 ((float[]){ 3, 3 });
+    std::cout << "P1: " << p1 << std::endl;
+    std::cout << "P2: " << p2 << std::endl;
+    std::cout << "Dist: " << utils::point::distance(p2, p1) << std::endl;
+
     // // Create some composite based on the unit vectors
     // // Vec3 comp = x * 2.0f + y * 3.0f + z * 4.0f;
     // Vec3 comp ((float[]){ 2, 3, 4 });

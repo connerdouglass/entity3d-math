@@ -7,22 +7,22 @@
 namespace e3d::utils::point {
 
     /**
-     * Calculates the absolute distance between two points
-     */
-    template<uint8_t S>
-    float distance(const Point<S>& left, const Point<S>& right) {
-        return e3d::utils::vec::magnitude(
-            vector_between(left, right)
-        );
-    }
-
-    /**
      * Calculates a vector between two points, starting at the first and pointing
      * toward the second
      */
     template<uint8_t S>
     Vec<S> between(const Point<S>& from, const Point<S>& to) {
         return to - from;
+    }
+
+    /**
+     * Calculates the absolute distance between two points
+     */
+    template<uint8_t S>
+    float distance(const Point<S>& left, const Point<S>& right) {
+        return e3d::utils::vec::magnitude(
+            between(left, right)
+        );
     }
 
     /**

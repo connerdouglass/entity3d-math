@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <cinttypes>
 #include <cmath>
@@ -160,6 +161,11 @@ namespace e3d {
         Mat<R, C> operator/(const Mat<R, C>& other) const {
             return this->divide(other);
         }
+
+        /**
+         * Creates a string representation of the matrix
+         */
+        std::string to_str() const;
 
     };
 
@@ -376,37 +382,51 @@ namespace e3d {
     }
 
     template<uint8_t R, uint8_t C>
-    ::std::ostream& operator<<(::std::ostream& out, Mat<R, C> const& obj) {
+    std::string Mat<R, C>::to_str() const {
+
+        // Create the string stream
+        std::stringstream ss;
 
         // If it's a vector
         if (C == 1) {
 
             // Print it as a single line
-            out << "<";
+            ss << "<";
             for (uint8_t i = 0; i < R; i++) {
-                if (i > 0) out << ", ";
-                float value = obj.get(i);
-                if (value >= 0) out << " ";
-                out << std::fixed << std::setprecision(3) << value;
+                if (i > 0) ss << ", ";
+                float value = this->get(i);
+                if (value >= 0) ss << " ";
+                ss << std::fixed << std::setprecision(3) << value;
             }
-            out << ">";
+            ss << ">";
 
         } else {
 
             // Loop through the rows
             for (uint8_t r = 0; r < R; r++) {
-                if (r > 0) out << std::endl;
-                out << "|";
+                if (r > 0) ss << std::endl;
+                ss << "|";
                 for (uint8_t c = 0; c < C; c++) {
-                    if (c > 0) out << "  ";
-                    float value = obj.get(r, c);
-                    if (value >= 0) out << " ";
-                    out << std::fixed << std::setprecision(3) << value;
+                    if (c > 0) ss << "  ";
+                    float value = this->get(r, c);
+                    if (value >= 0) ss << " ";
+                    ss << std::fixed << std::setprecision(3) << value;
                 }
-                out << " |";
+                ss << " |";
             }
 
         }
+
+        // Return the string value
+        return ss.str();
+
+    }
+
+    template<uint8_t R, uint8_t C>
+    ::std::ostream& operator<<(::std::ostream& out, Mat<R, C> const& obj) {
+
+        // Print the buffered string value
+        out << obj.to_str();
 
         // Return the stream
         return out;
