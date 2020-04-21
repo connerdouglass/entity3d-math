@@ -61,10 +61,9 @@ int main() {
     //     << std::endl;
 
     Point3 top_right ((float[]){ 1, 1, 0});
-    top_right = e3d::utils::vec::resize<3>(
-        e3d::utils::mat::mat4_create_rotation_z(M_PI / 2) * e3d::utils::vec::resize<4>(top_right)
-    );
-    std::cout << top_right << std::endl;
+    // top_right = e3d::utils::vec::resize<3>(
+    //     e3d::utils::mat::mat4_create_rotation_z(M_PI / 2) * e3d::utils::vec::resize<4>(top_right)
+    // );
 
     Quad3 tri ({
         Point3((float[]){ 0, 0, 0 }),

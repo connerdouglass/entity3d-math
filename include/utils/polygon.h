@@ -123,7 +123,10 @@ namespace e3d::utils::polygon {
                 // Calculate the angle with the previous cross produce
                 float angle = e3d::utils::vec::angle_between(prev_cross, cross);
 
-                // If the angle is greater than our approximation to zero
+                // If the angle is not equal to zero or PI, it's not planar.
+                // We check PI because it doesn't matter if the sign is negative or
+                // positive on the cross products. On a plane, one will produce zero
+                // and the other will produce PI, and both are considered the same
                 if (abs(angle) >= 0.00001 && abs(angle - M_PI) >= 0.00001) return false;
 
             }
