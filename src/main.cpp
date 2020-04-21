@@ -24,6 +24,13 @@ int main() {
     std::cout << "P1 -> P2: " << utils::point::between(p1, p2) << std::endl;
     std::cout << "Dist: " << utils::point::distance(p2, p1) << std::endl;
 
+    Vec3 normal = utils::point::normal(
+        utils::vec::resize<3>(p1),
+        utils::vec::resize<3>(p2),
+        Point3((float[]){ 0, 0, 0 })
+    );
+    std::cout << normal << std::endl;
+
     // // Create some composite based on the unit vectors
     // // Vec3 comp = x * 2.0f + y * 3.0f + z * 4.0f;
     // Vec3 comp ((float[]){ 2, 3, 4 });

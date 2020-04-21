@@ -112,13 +112,6 @@ namespace e3d {
         float w() const { return this->get(0, 3); }
 
         /**
-         * Gets the value at some index
-         */
-        const float operator[](size_t idx) const {
-            return this->data[idx];
-        };
-
-        /**
          * Operator overload for multiplication with another matrix
          */
         template<uint8_t OtherC>
@@ -158,7 +151,7 @@ namespace e3d {
         /**
          * Operator overload for division with a scalar value
          */
-        Mat<R, C> operator/(const Mat<R, C>& other) const {
+        Mat<R, C> operator/(float other) const {
             return this->divide(other);
         }
 

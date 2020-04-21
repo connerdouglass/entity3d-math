@@ -88,8 +88,10 @@ namespace e3d::utils::vec {
     Vec<S> normalize(const Vec<S>& vec) {
 
         // Get the magnitude of the matrix
-        // NOTE: The magnitude might be zero
         float mag = magnitude(vec);
+
+        // If the magnitude is zero, return a zero vector
+        if (std::abs(mag) <= 0.00001) return Vec<S>::zeros();
 
         // Divide the vector by the magnitude
         return vec / mag;
@@ -104,7 +106,6 @@ namespace e3d::utils::vec {
 
         // Copy the values
         for (uint8_t i = 0; i < Sto; i++) {
-            // if (i < Sfrom) result[i] = vec[i];
             if (i < Sfrom) result.set(i, vec.get(i));
             else result.set(i, 0);
         }
