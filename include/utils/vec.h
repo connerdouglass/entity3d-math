@@ -40,6 +40,9 @@ namespace e3d::utils::vec {
 
     }
 
+    /**
+     * Calculates the cross product of two vectors
+     */
     template<uint8_t S>
     Vec<S> cross(const Vec<S>& left, const Vec<S>& right) {
         static_assert(S == 3, "Cross product only possible in 3-dimensions");
@@ -112,6 +115,23 @@ namespace e3d::utils::vec {
 
         // Return the result
         return result;
+
+    }
+
+    /**
+     * Calculates the angle between two vectors
+     */
+    template<uint8_t S>
+    float angle_between(const Vec<S>& left, const Vec<S>& right) {
+
+        // Get the dot product
+        float dot_product = dot(left, right);
+
+        // Divide it by the magnitudes
+        float cos_theta = dot_product / magnitude(left) / magnitude(right);
+
+        // Return the angle
+        return acosf(cos_theta);
 
     }
 

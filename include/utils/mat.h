@@ -185,4 +185,15 @@ namespace e3d::utils::mat {
     Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec4& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
     Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec3& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
 
+    /**
+     * Calculates the determinant of the provided matrix. Determinant can be thought of as the
+     * scalar effect the matrix would have on the vector space, if used as a transformation.
+     */
+    template<uint8_t R, uint8_t C>
+    float determinant(const Mat<R, C>& mat) {
+
+        // 
+
+    }
+
 };
