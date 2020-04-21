@@ -17,7 +17,7 @@ int main() {
     std::cout << result << std::endl;
 
     // Create a point
-    Point2 p1 ((float[]){ 1, 1 });
+    Point2 p1 ((float[]){ 0, 1 });
     Point2 p2 ((float[]){ 3, 3 });
     std::cout << "P1: " << p1 << std::endl;
     std::cout << "P2: " << p2 << std::endl;
@@ -25,9 +25,11 @@ int main() {
     std::cout << "Dist: " << utils::point::distance(p2, p1) << std::endl;
 
     Vec3 normal = utils::point::normal(
-        utils::vec::resize<3>(p1),
-        utils::vec::resize<3>(p2),
-        Point3((float[]){ 0, 0, 0 })
+        // utils::vec::resize<3>(p1),
+        // utils::vec::resize<3>(p2),
+        Point3((float[]){ 0, 0, 0 }),
+        Point3((float[]){ 1, 0, 0 }),
+        Point3((float[]){ 1, 1, 0 })
     );
     std::cout << normal << std::endl;
 

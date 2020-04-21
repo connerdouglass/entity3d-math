@@ -34,7 +34,7 @@ namespace e3d::utils::point {
 
         // Create the two vectors
         Vec3 vec_a = b - a;
-        Vec3 vec_b = c - a;
+        Vec3 vec_b = c - b;
 
         // Calculate the cross product
         return e3d::utils::vec::normalize(
