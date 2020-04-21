@@ -140,6 +140,13 @@ namespace e3d {
         };
 
         /**
+         * Operator overload for subtraction with another matrix
+         */
+        Mat<R, C> operator-(const Mat<R, C>& other) const {
+            return this->add(other * -1);
+        };
+
+        /**
          * Operator overload for division of this matrix with another
          */
         template<uint8_t OtherR>

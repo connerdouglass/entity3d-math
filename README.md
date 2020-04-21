@@ -1,5 +1,5 @@
 # Entity3d Math Library
-This is the math library which is used in the Entity3d graphics library. The code is very general and portable, and can be used anywhere. There is an emphasis on linear algebra, specifically matrix and vector operations.
+This is a very general, portable math / linear algebra library for 3d graphics applications.
 
 ### Why use Entity3d
 In two words: safety and accuracy. This library makes extensive use of C++ templates and static assertions. For instance, there is one `Mat` class for matrices, and users can specify the dimensions of the matrix using templates like so: `Mat<4, 4>` (for a 4x4 matrix). The benefit of using generics in this fashion is that some illegal matrix operations can be prevented at compile-time, instead of causing errors at runtime.
