@@ -84,7 +84,7 @@ Mat<3, 4> a = ...
 Mat<4, 5> b = ...
 
 // Multiply them together, resulting in a 3x5 result
-Mat<3, 5> = a * b;
+Mat<3, 5> result = a * b;
 ```
 
 Likewise, there is a special type of matrix called an "identity matrix." When a matrix is multiplied by an identity matrix, the result is a matrix exactly equal to the original. Despite their seeming uselessness, identity matrices are indeed useful as the starting point when composing a sequence of transformations.
