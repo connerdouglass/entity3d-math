@@ -21,6 +21,7 @@ int main() {
     Point2 p2 ((float[]){ 3, 3 });
     std::cout << "P1: " << p1 << std::endl;
     std::cout << "P2: " << p2 << std::endl;
+    std::cout << "P1 -> P2: " << utils::point::between(p1, p2) << std::endl;
     std::cout << "Dist: " << utils::point::distance(p2, p1) << std::endl;
 
     // // Create some composite based on the unit vectors
