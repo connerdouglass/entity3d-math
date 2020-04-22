@@ -60,6 +60,7 @@ int main() {
     //     << e3d::utils::projection::mat4_create_perspective(45.0f, 16.0f / 9.0f, 0.1f, 10.0f)
     //     << std::endl;
 
+    /*
     Point3 top_right ((float[]){ 1, 1, 0});
     // top_right = e3d::utils::vec::resize<3>(
     //     e3d::utils::mat::mat4_create_rotation_z(M_PI / 2) * e3d::utils::vec::resize<4>(top_right)
@@ -76,5 +77,34 @@ int main() {
 
     std::cout << "Planar? " << e3d::utils::polygon::is_planar(tri) << std::endl;
     std::cout << "Convex? " << e3d::utils::polygon::is_convex(tri) << std::endl;
+    */
+    
+    Mat4 mat1 = Mat4::identity();
+    std::cout << mat1 << std::endl;
+    std::cout << "det (1): " << utils::mat::determinant(mat1) << std::endl << std::endl;
+
+    Mat<2, 2> mat2 ((float[]) {
+        4, -3,
+        3, -5
+    });
+    std::cout << mat2 << std::endl;
+    std::cout << "det (-11): " << utils::mat::determinant(mat2) << std::endl << std::endl;
+
+    Mat<3, 3> mat3 ((float[]) {
+        2, -3, 1,
+        2, 0, -1,
+        1, 4, 5
+    });
+    std::cout << mat3 << std::endl;
+    std::cout << "det (49): " << utils::mat::determinant(mat3) << std::endl << std::endl;
+
+    Mat4 mat4 ((float[]) {
+        3, 0, 2, -1,
+        1, 2, 0, -2,
+        4, 0, 6, -3,
+        5, 0, 2, 0
+    });
+    std::cout << mat4 << std::endl;
+    std::cout << "det (20): " << utils::mat::determinant(mat4) << std::endl;
     
 }

@@ -185,15 +185,65 @@ namespace e3d::utils::mat {
     Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec4& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
     Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec3& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
 
+    float det(const float* data, uint8_t size) {
+
+        // If the number of rows is zero
+        if (size == 0) return 0;
+        
+        // If the number of rows is one
+        if (size == 1) return data[0];
+
+        // Start the sum at zero
+        float sum = 0;
+
+        // Create the submatrix
+        float subdata[(size - 1) * (size - 1)];
+
+        // Loop through the columns
+        for (uint8_t cursor_c = 0; cursor_c < size; cursor_c++) {
+
+            // Get the value at the index
+            float cursor_value = data[cursor_c];
+
+            // Loop through the columns and fill up the subdata array
+            for (uint8_t c = 0; c < size; c++) {
+
+                // If this is on the cursor column, skip it
+                if (c == cursor_c) continue;
+
+                // Get the submatrix column index
+                uint8_t sub_c = c < cursor_c ? c : (c - 1);
+
+                // Loop through the rows
+                for (uint8_t r = 0; r < size - 1; r++) {
+
+                    // Copy the value over
+                    subdata[r * (size - 1) + sub_c] = data[(r + 1) * size + c];
+
+                }
+
+            }
+
+            // Calculate this partial
+            float partial = cursor_value * det(subdata, size - 1);
+
+            // Add to / subtract from the sum
+            sum += (cursor_c % 2 == 0) ? partial : -partial;
+
+        }
+
+        // Return the sum
+        return sum;
+
+    }
+
     /**
      * Calculates the determinant of the provided matrix. Determinant can be thought of as the
      * scalar effect the matrix would have on the vector space, if used as a transformation.
      */
-    template<uint8_t R, uint8_t C>
-    float determinant(const Mat<R, C>& mat) {
-
-        // 
-
+    template<uint8_t R>
+    float determinant(const Mat<R, R>& mat) {
+        return det(mat.data, R);
     }
 
 };
