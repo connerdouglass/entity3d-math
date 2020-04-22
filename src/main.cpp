@@ -106,5 +106,9 @@ int main() {
     });
     std::cout << mat4 << std::endl;
     std::cout << "det (20): " << utils::mat::determinant(mat4) << std::endl;
+
+    std::cout << std::endl << std::endl;
+
+    std::cout << utils::mat::mat4_create_translation(1, 2, 3) << std::endl;
     
 }
