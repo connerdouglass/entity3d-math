@@ -34,4 +34,24 @@ namespace e3d::utils::projection {
 
     }
 
+    /**
+     * Creates an orthographic projection matrix
+     */
+    Mat4 mat4_create_orthographic(float left, float right, float bottom, float top, float near, float far) {
+
+        // Create the result matrix
+        Mat4 mat = Mat4::zeros();
+        mat.set(0, 0, 2.0f / (right - left));
+        mat.set(1, 1, 2.0f / (top - bottom));
+        mat.set(2, 2, -2.0f / (far - near));
+        mat.set(0, 3, -(right + left) / (right - left));
+        mat.set(1, 3, -(top + bottom) / (top - bottom));
+        mat.set(2, 3, -(far + near) / (far - near));
+        mat.set(3, 3, 1);
+
+        // Return the matrix
+        return mat;
+
+    }
+
 }
