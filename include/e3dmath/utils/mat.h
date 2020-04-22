@@ -8,7 +8,7 @@ namespace e3d::utils::mat {
     /**
      * Performs determinant calculation on a matrix from raw data
      */
-    float _det(const float* data, uint8_t size) {
+    static float _det(const float* data, uint8_t size) {
 
         // If the number of rows is zero
         if (size == 0) return 0;
@@ -65,14 +65,14 @@ namespace e3d::utils::mat {
      * scalar effect the matrix would have on the vector space, if used as a transformation.
      */
     template<uint8_t R>
-    float determinant(const Mat<R, R>& mat) {
+    static float determinant(const Mat<R, R>& mat) {
         return _det(mat.data, R);
     }
 
     /**
      * Creates a translation matrix
      */
-    Mat4 mat4_create_translation(float x, float y, float z) {
+    static Mat4 mat4_create_translation(float x, float y, float z) {
 
         // Create an identity matrix
         Mat4 result = Mat4::identity();
@@ -90,7 +90,7 @@ namespace e3d::utils::mat {
     /**
      * Performs a translation on a matrix and returns the result
      */
-    Mat4 mat4_translate(const Mat4& mat, float x, float y, float z) {
+    static Mat4 mat4_translate(const Mat4& mat, float x, float y, float z) {
 
         // Create a copy of the matrix
         Mat4 result(mat);
@@ -111,13 +111,13 @@ namespace e3d::utils::mat {
         return result;
 
     }
-    Mat4 mat4_translate(const Mat4& mat, const Vec4& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
-    Mat4 mat4_translate(const Mat4& mat, const Vec3& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_translate(const Mat4& mat, const Vec4& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_translate(const Mat4& mat, const Vec3& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
 
     /**
      * Creates a matrix for scaling transformations
      */
-    Mat4 mat4_create_scale(float x, float y, float z) {
+    static Mat4 mat4_create_scale(float x, float y, float z) {
 
         // Create the matrix
         Mat4 mat = Mat4::identity();
@@ -135,7 +135,7 @@ namespace e3d::utils::mat {
     /**
      * Performs a scale transformation on a matrix and returns the result
      */
-    Mat4 mat4_scale(const Mat4& mat, float x, float y, float z) {
+    static Mat4 mat4_scale(const Mat4& mat, float x, float y, float z) {
 
         // Create a copy of the matrix
         Mat4 result(mat);
@@ -150,13 +150,13 @@ namespace e3d::utils::mat {
         return result;
 
     }
-    Mat4 mat4_scale(const Mat4& mat, const Vec4& vec) { return mat4_scale(mat, vec.x(), vec.y(), vec.z()); }
-    Mat4 mat4_scale(const Mat4& mat, const Vec3& vec) { return mat4_scale(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_scale(const Mat4& mat, const Vec4& vec) { return mat4_scale(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_scale(const Mat4& mat, const Vec3& vec) { return mat4_scale(mat, vec.x(), vec.y(), vec.z()); }
 
     /**
      * Creates a rotation matrix for rotation of `x` radians on the x-axis
      */
-    Mat4 mat4_create_rotation_x(float x) {
+    static Mat4 mat4_create_rotation_x(float x) {
 
         // Create the identity matrix
         Mat4 result = Mat4::identity();
@@ -179,7 +179,7 @@ namespace e3d::utils::mat {
     /**
      * Creates a rotation matrix for rotation of `y` radians on the y-axis
      */
-    Mat4 mat4_create_rotation_y(float y) {
+    static Mat4 mat4_create_rotation_y(float y) {
 
         // Create the identity matrix
         Mat4 result = Mat4::identity();
@@ -202,7 +202,7 @@ namespace e3d::utils::mat {
     /**
      * Creates a rotation matrix for rotation of `z` radians on the z-axis
      */
-    Mat4 mat4_create_rotation_z(float z) {
+    static Mat4 mat4_create_rotation_z(float z) {
 
         // Create the identity matrix
         Mat4 result = Mat4::identity();
@@ -225,7 +225,7 @@ namespace e3d::utils::mat {
     /**
      * Performs a rotate transformation on the matrix in YXZ-order, and then returns the result
      */
-    Mat4 mat4_create_rotation_yxz(float x, float y, float z) {
+    static Mat4 mat4_create_rotation_yxz(float x, float y, float z) {
 
         // Create the result matrix
         Mat4 mat;
@@ -263,8 +263,8 @@ namespace e3d::utils::mat {
         return mat;
 
     }
-    Mat4 mat4_rotate_yxz(const Mat4& mat, float x, float y, float z) { return mat * mat4_create_rotation_yxz(x, y, z); }
-    Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec4& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
-    Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec3& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_rotate_yxz(const Mat4& mat, float x, float y, float z) { return mat * mat4_create_rotation_yxz(x, y, z); }
+    static Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec4& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
+    static Mat4 mat4_rotate_yxz(const Mat4& mat, const Vec3& vec) { return mat4_rotate_yxz(mat, vec.x(), vec.y(), vec.z()); }
 
 };

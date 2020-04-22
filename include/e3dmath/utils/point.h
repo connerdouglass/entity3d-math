@@ -11,7 +11,7 @@ namespace e3d::utils::point {
      * toward the second
      */
     template<uint8_t S>
-    Vec<S> between(const Point<S>& from, const Point<S>& to) {
+    static Vec<S> between(const Point<S>& from, const Point<S>& to) {
         return to - from;
     }
 
@@ -19,7 +19,7 @@ namespace e3d::utils::point {
      * Calculates the absolute distance between two points
      */
     template<uint8_t S>
-    float distance(const Point<S>& left, const Point<S>& right) {
+    static float distance(const Point<S>& left, const Point<S>& right) {
         return e3d::utils::vec::magnitude(
             between(left, right)
         );
@@ -30,7 +30,7 @@ namespace e3d::utils::point {
      * because cross-product is always a three-dimensional operation, and the number
      * of arguments is 3 for that reason.
      */
-    Vec3 normal(const Point3& a, const Point3& b, const Point3& c) {
+    static Vec3 normal(const Point3& a, const Point3& b, const Point3& c) {
 
         // Create the two vectors
         Vec3 vec_a = b - a;

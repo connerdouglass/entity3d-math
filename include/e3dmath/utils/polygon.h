@@ -11,7 +11,7 @@ namespace e3d::utils::polygon {
      * because cross-product is always a three-dimensional operation, and the number
      * of arguments is 3 for that reason.
      */
-    Vec3 tri_normal(const Tri3& tri) {
+    static Vec3 tri_normal(const Tri3& tri) {
 
         // Return the normal of the triangle
         return e3d::utils::point::normal(
@@ -26,7 +26,7 @@ namespace e3d::utils::polygon {
      * Calculates the area of a polygon
      */
     template<uint8_t P, uint8_t S>
-    float area(const Polygon<P, S>& poly) {
+    static float area(const Polygon<P, S>& poly) {
 
         // The total area
         float sum = 0;
@@ -66,7 +66,7 @@ namespace e3d::utils::polygon {
      * Determines if the given polygon is convex
      */
     template<uint8_t P, uint8_t S>
-    bool is_convex(const Polygon<P, S>& poly) {
+    static bool is_convex(const Polygon<P, S>& poly) {
 
         // The previous cross product
         bool prev_sign;
@@ -103,7 +103,7 @@ namespace e3d::utils::polygon {
      * exist on the same plane.
      */
     template<uint8_t P, uint8_t S>
-    bool is_planar(const Polygon<P, S>& poly) {
+    static bool is_planar(const Polygon<P, S>& poly) {
 
         // The previous cross product
         Vec<S> prev_cross;

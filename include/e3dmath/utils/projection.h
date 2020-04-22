@@ -8,7 +8,7 @@ namespace e3d::utils::projection {
     /**
      * Creates a perspective projection matrix
      */
-    Mat4 mat4_create_perspective(float fov, float aspectRatio, float zNear, float zFar) {
+    static Mat4 mat4_create_perspective(float fov, float aspectRatio, float zNear, float zFar) {
 
         // Calculate the correct scale for the display, vertically
         float scale = tanf(fov / 2.0f * M_PI / 180.0f) * zNear;
@@ -37,7 +37,7 @@ namespace e3d::utils::projection {
     /**
      * Creates an orthographic projection matrix
      */
-    Mat4 mat4_create_orthographic(float left, float right, float bottom, float top, float near, float far) {
+    static Mat4 mat4_create_orthographic(float left, float right, float bottom, float top, float near, float far) {
 
         // Create the result matrix
         Mat4 mat = Mat4::zeros();

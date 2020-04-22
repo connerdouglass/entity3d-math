@@ -6,7 +6,7 @@
 namespace e3d::utils::vec {
 
     template<uint8_t S>
-    Vec<S> i_axis(uint8_t index) {
+    static Vec<S> i_axis(uint8_t index) {
         float values[S];
         for (uint8_t i = 0; i < S; i++) {
             values[i] = i == index ? 1.0 : 0.0;
@@ -15,19 +15,19 @@ namespace e3d::utils::vec {
     }
 
     template<uint8_t S>
-    Vec<S> x_axis() { return i_axis<S>(0); }
+    static Vec<S> x_axis() { return i_axis<S>(0); }
 
     template<uint8_t S>
-    Vec<S> y_axis() { return i_axis<S>(1); }
+    static Vec<S> y_axis() { return i_axis<S>(1); }
 
     template<uint8_t S>
-    Vec<S> z_axis() { return i_axis<S>(2); }
+    static Vec<S> z_axis() { return i_axis<S>(2); }
 
     /**
      * Calculates the dot product of two vectors
      */
     template<uint8_t S>
-    float dot(const Vec<S>& left, const Vec<S>& right) {
+    static float dot(const Vec<S>& left, const Vec<S>& right) {
 
         // Start at zero
         float dot = 0;
@@ -44,7 +44,7 @@ namespace e3d::utils::vec {
      * Calculates the cross product of two vectors
      */
     template<uint8_t S>
-    Vec<S> cross(const Vec<S>& left, const Vec<S>& right) {
+    static Vec<S> cross(const Vec<S>& left, const Vec<S>& right) {
         static_assert(S == 3, "Cross product only possible in 3-dimensions");
 
         // Create the result vector
@@ -71,7 +71,7 @@ namespace e3d::utils::vec {
     }
 
     template<uint8_t S>
-    float magnitude(const Vec<S>& vec) {
+    static float magnitude(const Vec<S>& vec) {
 
         // Create the sum
         float sum = 0;
@@ -88,7 +88,7 @@ namespace e3d::utils::vec {
     }
 
     template<uint8_t S>
-    Vec<S> normalize(const Vec<S>& vec) {
+    static Vec<S> normalize(const Vec<S>& vec) {
 
         // Get the magnitude of the matrix
         float mag = magnitude(vec);
@@ -102,7 +102,7 @@ namespace e3d::utils::vec {
     }
 
     template<uint8_t Sto, uint8_t Sfrom>
-    Vec<Sto> resize(const Vec<Sfrom>& vec) {
+    static Vec<Sto> resize(const Vec<Sfrom>& vec) {
 
         // Create the new vector
         Vec<Sto> result;
@@ -122,7 +122,7 @@ namespace e3d::utils::vec {
      * Calculates the angle between two vectors
      */
     template<uint8_t S>
-    float angle_between(const Vec<S>& left, const Vec<S>& right) {
+    static float angle_between(const Vec<S>& left, const Vec<S>& right) {
 
         // Get the dot product
         float dot_product = dot(left, right);
