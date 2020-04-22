@@ -1,5 +1,5 @@
 #include <iostream>
-#include "e3dmath.h"
+#include <e3dmath/e3dmath.h>
 
 using namespace e3d;
 

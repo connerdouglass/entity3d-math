@@ -1,6 +1,6 @@
 #pragma once
 
-#include "e3dmath.h"
+#include "../types/mat.h"
 #include <cmath>
 
 namespace e3d::utils::mat {
