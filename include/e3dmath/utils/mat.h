@@ -92,23 +92,8 @@ namespace e3d::utils::mat {
      */
     static Mat4 mat4_translate(const Mat4& mat, float x, float y, float z) {
 
-        // Create a copy of the matrix
-        Mat4 result(mat);
-
-        // Calculate the bottom row of the matrix, one column at a time
-        for (uint8_t i = 0; i < 4; i++) {
-
-            // Update the value for the bottom row
-            result.set(3, i,
-                x * mat.get(0, i) +
-                y * mat.get(1, i) +
-                z * mat.get(2, i) +
-                mat.get(3, i));
-
-        }
-
-        // Return the result
-        return result;
+        // Multiply with the translation matrix
+        return mat * mat4_create_translation(x, y, z);
 
     }
     static Mat4 mat4_translate(const Mat4& mat, const Vec4& vec) { return mat4_translate(mat, vec.x(), vec.y(), vec.z()); }
